@@ -1,0 +1,25 @@
+# Test Category:
+# UI Functional Test
+
+# Requirements Covered:
+# FR2.2
+# FR2.3
+# FR2.4
+
+def test_submit_button_starts_translation(page):
+    """
+    Verifies that clicking translateButton
+    sends source text for translation.
+
+    Semantic focus:
+    initiate ("initiera")
+    submit ("skicka")
+    """
+
+    page.goto("https://tina.ethernettrip.com")
+
+    page.fill("#sourceText", "Hej världen")
+
+    page.click("#translateButton")
+
+    assert page.locator("#translationResultPanel").is_visible()

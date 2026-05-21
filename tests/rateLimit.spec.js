@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { SearchPage } from '../pages/SearchPage';
-
+// --- GENERERAD AV GEMINI ---
 // Krav 3.1: API och pålitlighet - Överbelastningsskydd
 // Krav 3.1.1: Max 10 anrop per 5 sekunder
 // Krav 3.1.2: HTTP 429 vid överträdelse

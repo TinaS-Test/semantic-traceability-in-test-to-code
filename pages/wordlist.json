@@ -1,0 +1,327 @@
+[
+  {
+    "ord": "Säkerhet",
+    "ordklass": "Substantiv",
+    "synonymer": ["Livlina", "Trygghet", "Skydd", "Övertygelse", "Auktoritet"],
+    "test_high_traceability": ["Security", "Authorization", "Authentication"],
+    "test_low_traceability": ["Livlina", "Trygghet", "Övertygelse"],
+    "test_code_high_traceability": "await expect(page).toHaveURL(/.*\\/secure-dashboard/);",
+    "test_code_low_traceability": "await expect(page.locator('.hidden-div-2')).toBeVisible();"
+  },
+  {
+    "ord": "Skydd",
+    "ordklass": "Substantiv",
+    "synonymer": ["Försvar", "Stöd", "Preventiv åtgärd", "Beskydd", "Garanti"],
+    "test_high_traceability": ["Guard", "Safeguard", "Mitigation"],
+    "test_low_traceability": ["Försvar", "Beskydd", "Garanti"],
+    "test_code_high_traceability": "await expect(page.getByRole('alert', { name: 'Access Denied' })).toBeVisible();",
+    "test_code_low_traceability": "await expect(page.locator('.red-text')).toBeVisible();"
+  },
+  {
+    "ord": "Injektioner",
+    "ordklass": "Substantiv",
+    "synonymer": ["Injicering", "Insprutning", "Stimulans", "Kick", "Sporre"],
+    "test_high_traceability": ["Injection", "MaliciousPayload"],
+    "test_low_traceability": ["Kick", "Sporre", "Stimulans"],
+    "test_code_high_traceability": "const payload = '<script>alert(1)</script>'; await page.getByRole('searchbox').fill(payload);",
+    "test_code_low_traceability": "await page.locator('input').fill('kick');"
+  },
+  {
+    "ord": "Sökfunktioner",
+    "ordklass": "Substantiv",
+    "synonymer": ["Sök", "Spårsinne", "Lokaliseringsförmåga", "Funktion", "Användning"],
+    "test_high_traceability": ["SearchEngine", "QueryHandler", "SearchComponent"],
+    "test_low_traceability": ["Spårsinne", "Lokaliseringsförmåga", "Sammanhang"],
+    "test_code_high_traceability": "this.searchInput = page.locator('#search-input');",
+    "test_code_low_traceability": "this.searchInput = page.locator('.top-bar > div:nth-child(2) > input');"
+  },
+  {
+    "ord": "System(et)",
+    "ordklass": "Substantiv",
+    "synonymer": ["Program", "Systematik", "Sammanhängande helhet", "Konstruktion", "Ordnad helhet"],
+    "test_high_traceability": ["SystemUnderTest", "SUT", "Application", "Service"],
+    "test_low_traceability": ["Systematik", "Sammanhängande helhet", "Ordnad helhet"],
+    "test_code_high_traceability": "await page.goto(process.env.BASE_URL);",
+    "test_code_low_traceability": "await page.goto('http://192.168.1.15/test');"
+  },
+  {
+    "ord": "Rapport",
+    "ordklass": "Substantiv",
+    "synonymer": ["Meddelande", "Redogörelse", "Redovisan", "Anmälan", "Referat"],
+    "test_high_traceability": ["Report", "Receipt", "Confirmation", "AuditResult"],
+    "test_low_traceability": ["Meddelande", "Redovisan", "Referat"],
+    "test_code_high_traceability": "await expect(page.getByTestId('transaction-receipt')).toBeVisible();",
+    "test_code_low_traceability": "await expect(page.locator('text=Tack för din beställning')).toBeVisible();"
+  },
+  {
+    "ord": "Logg",
+    "ordklass": "Substantiv",
+    "synonymer": ["Mätinstrument", "Journal", "Loggbok", "Dagbok", "Hastighetsmätare"],
+    "test_high_traceability": ["AuditLog", "TraceLog", "SystemLog"],
+    "test_low_traceability": ["Dagbok", "Mätinstrument", "Hastighetsmätare"],
+    "test_code_high_traceability": "const logEntries = await page.getByRole('row', { name: /audit event/i });",
+    "test_code_low_traceability": "const logs = await page.locator('table > tbody > tr').all();"
+  },
+  {
+    "ord": "Åtkomst",
+    "ordklass": "Substantiv",
+    "synonymer": ["Förvärv", "Access", "Tillträde", "Tillgång", "Anförskaffande"],
+    "test_high_traceability": ["Access", "Permission", "RolePrivilege"],
+    "test_low_traceability": ["Förvärv", "Anförskaffande", "Tillträde"],
+    "test_code_high_traceability": "await expect(page.getByRole('button', { name: 'Admin Settings' })).toBeDisabled();",
+    "test_code_low_traceability": "await expect(page.locator('#btn-admin')).toHaveCSS('opacity', '0.5');"
+  },
+  {
+    "ord": "Händelse",
+    "ordklass": "Substantiv",
+    "synonymer": ["Tilldragelse", "Inträffande", "Företeelse", "Evenemang", "Incident"],
+    "test_high_traceability": ["Event", "Transaction", "Incident"],
+    "test_low_traceability": ["Tilldragelse", "Företeelse", "Evenemang"],
+    "test_code_high_traceability": "await page.waitForResponse(res => res.url().includes('/api/events') && res.status() === 200);",
+    "test_code_low_traceability": "await page.waitForTimeout(5000);"
+  },
+
+  {
+    "ord": "Validering",
+    "ordklass": "Verb",
+    "synonymer": ["Testa", "Verifiera", "Göra giltigt", "Bekräfta", "Kvalitetskontrollera"],
+    "test_high_traceability": ["Validate", "Verify", "Assert"],
+    "test_low_traceability": ["Testa", "Göra giltigt", "Bekräfta"],
+    "test_code_high_traceability": "await expect(page.getByRole('status')).toHaveText('Godkänd');",
+    "test_code_low_traceability": "const status = await page.locator('.status-text').innerText(); if(status === 'Godkänd') { ... }"
+  },
+  {
+    "ord": "Hantera",
+    "ordklass": "Verb",
+    "synonymer": ["Behandla", "Sköta", "Manövrera", "Styra", "Bearbeta"],
+    "test_high_traceability": ["Handle", "Process", "Intercept"],
+    "test_low_traceability": ["Sköta", "Manövrera", "Behandla"],
+    "test_code_high_traceability": "await page.route('**/api/data', route => route.fulfill({ status: 200 }));",
+    "test_code_low_traceability": "await page.waitForTimeout(3000); // Hoppas att systemet hanterat datan"
+  },
+  {
+    "ord": "Nyttja",
+    "ordklass": "Verb",
+    "synonymer": ["Använda", "Dra vinning av", "Bruka", "Anamma", "Tillgodogöra sig"],
+    "test_high_traceability": ["Utilize", "Consume", "Execute"],
+    "test_low_traceability": ["Dra vinning av", "Anamma", "Bruka"],
+    "test_code_high_traceability": "await page.getByRole('button', { name: 'Exekvera' }).click();",
+    "test_code_low_traceability": "await page.locator('div > span.btn').click();"
+  },
+  {
+    "ord": "Anrop",
+    "ordklass": "Verb",
+    "synonymer": ["Förfrågan", "Åkallan", "Signal", "Utrop", "Lystringssignal"],
+    "test_high_traceability": ["Request", "Call", "ApiCall"],
+    "test_low_traceability": ["Åkallan", "Lystringssignal", "Utrop"],
+    "test_code_high_traceability": "const response = await request.post('/api/v1/translate', { data: payload });",
+    "test_code_low_traceability": "await page.click('#send'); await page.waitForTimeout(1000);"
+  },
+  {
+    "ord": "Minska",
+    "ordklass": "Verb",
+    "synonymer": ["Göra mindre", "Reducera", "Ta bort", "Begränsa", "Avta"],
+    "test_high_traceability": ["Reduce", "Minimize", "Throttle"],
+    "test_low_traceability": ["Göra mindre", "Avta", "Reducera"],
+    "test_code_high_traceability": "await page.route('**/*', route => new Promise(r => setTimeout(r, 1000)).then(() => route.continue())); // Throttling",
+    "test_code_low_traceability": "await page.type('#input', 'text', { delay: 100 });"
+  },
+  {
+    "ord": "Skicka",
+    "ordklass": "Verb",
+    "synonymer": ["Sända", "Leverera", "Räcka", "Överföra", "Transportera"],
+    "test_high_traceability": ["Submit", "Send", "Dispatch"],
+    "test_low_traceability": ["Räcka", "Transportera", "Leverera"],
+    "test_code_high_traceability": "await page.getByRole('form').dispatchEvent('submit');",
+    "test_code_low_traceability": "await page.keyboard.press('Enter');"
+  },
+  {
+    "ord": "Förhindra",
+    "ordklass": "Verb",
+    "synonymer": ["Stoppa", "Avvärja", "Avstyra", "Motverka", "Sätta stopp för"],
+    "test_high_traceability": ["Prevent", "Block", "Intercept"],
+    "test_low_traceability": ["Avvärja", "Avstyra", "Motverka"],
+    "test_code_high_traceability": "await page.route('**/api/unauthorized', route => route.abort('accessdenied'));",
+    "test_code_low_traceability": "await expect(page.locator('#btn-submit')).toHaveClass(/disabled/);"
+  },
+  {
+    "ord": "Lagra",
+    "ordklass": "Verb",
+    "synonymer": ["Spara", "Bunkra", "Arkivera", "Samla", "Förvara"],
+    "test_high_traceability": ["Store", "Persist", "Cache"],
+    "test_low_traceability": ["Bunkra", "Arkivera", "Samla"],
+    "test_code_high_traceability": "const token = await page.evaluate(() => window.localStorage.getItem('authToken'));",
+    "test_code_low_traceability": "const token = await page.locator('#hidden-auth-div').innerText();"
+  },
+  {
+    "ord": "Omdirigera",
+    "ordklass": "Verb",
+    "synonymer": ["Anföra", "Leda", "Styra", "Ge riktning åt", "Rikta", "Vägleda"],
+    "test_high_traceability": ["Redirect", "Route"],
+    "test_low_traceability": ["Anföra", "Ge riktning åt", "Leda"],
+    "test_code_high_traceability": "await page.waitForURL('**/login?redirect=true');",
+    "test_code_low_traceability": "await page.waitForLoadState('networkidle');"
+  },
+  {
+    "ord": "Kräva",
+    "ordklass": "Verb",
+    "synonymer": ["Fordra", "Begära", "Framtvinga", "Insistera", "Befalla"],
+    "test_high_traceability": ["Require", "Enforce", "Assert"],
+    "test_low_traceability": ["Fordra", "Framtvinga", "Befalla"],
+    "test_code_high_traceability": "await expect(page.getByRole('textbox', { name: 'Email' })).toHaveAttribute('required', '');",
+    "test_code_low_traceability": "await expect(page.locator('.required-asterisk')).toBeVisible();"
+  },
+  {
+    "ord": "Initiera",
+    "ordklass": "Verb",
+    "synonymer": ["Starta", "Sätta igång", "Påbörja", "Trigga", "Inleda"],
+    "test_high_traceability": ["Initiate", "Trigger", "Initialize"],
+    "test_low_traceability": ["Sätta igång", "Påbörja", "Inleda"],
+    "test_code_high_traceability": "await page.getByRole('button', { name: 'Initiera Sökning' }).click();",
+    "test_code_low_traceability": "await page.locator('#start-btn').click();"
+  },
+  {
+    "ord": "Returnera",
+    "ordklass": "Verb",
+    "synonymer": ["Återge", "Skicka tillbaka", "Återsända", "Återbära", "Eftersända"],
+    "test_high_traceability": ["Return", "Respond", "Yield"],
+    "test_low_traceability": ["Återge", "Återsända", "Återbära"],
+    "test_code_high_traceability": "return await this.resultItems.count(); // Page Object Pattern",
+    "test_code_low_traceability": "const res = await page.locator('.results').innerText(); return res;"
+  },
+  {
+    "ord": "Generera",
+    "ordklass": "Verb",
+    "synonymer": ["Skapa", "Göra", "Alstra", "Framställa", "Utveckla"],
+    "test_high_traceability": ["Generate", "Create", "Mock"],
+    "test_low_traceability": ["Alstra", "Framställa", "Göra"],
+    "test_code_high_traceability": "await page.route('**/api/history', r => r.fulfill({ json: generateMockData() }));",
+    "test_code_low_traceability": "await page.fill('#input', 'Test data 1'); await page.click('#save');"
+  },
+  {
+    "ord": "Underhålla",
+    "ordklass": "Verb",
+    "synonymer": ["Sköta", "Vårda", "Försörja", "Stödja", "Reparera"],
+    "test_high_traceability": ["Maintain", "Setup", "Teardown"],
+    "test_low_traceability": ["Vårda", "Försörja", "Sköta"],
+    "test_code_high_traceability": "test.afterEach(async ({ page }) => { await page.evaluate(() => localStorage.clear()); });",
+    "test_code_low_traceability": "// Avsaknad av miljöåterställning efter test"
+  },
+  {
+    "ord": "Översätta",
+    "ordklass": "Verb",
+    "synonymer": ["Tolka", "Interpretera", "Återge", "Avkoda", "Tyda"],
+    "test_high_traceability": ["Translate", "Transform", "Map"],
+    "test_low_traceability": ["Tolka", "Interpretera", "Tyda"],
+    "test_code_high_traceability": "await page.setExtraHTTPHeaders({ 'Accept-Language': 'sv-SE' });",
+    "test_code_low_traceability": "await page.locator('#flag-sv').click();"
+  },
+  {
+    "ord": "Insistera",
+    "ordklass": "Verb",
+    "synonymer": ["Fortsätta", "Utstå", "Framhärda", "Yrka", "Vidhålla"],
+    "test_high_traceability": ["Assert", "Expect", "Verify"],
+    "test_low_traceability": ["Utstå", "Framhärda", "Yrka"],
+    "test_code_high_traceability": "await expect.soft(page.getByRole('alert')).toBeVisible(); // Soft assertion tillåter fortsatt test",
+    "test_code_low_traceability": "if (!await page.isVisible('.error')) throw new Error('Saknas');"
+  },
+  {
+    "ord": "Informera",
+    "ordklass": "Verb",
+    "synonymer": ["Upplysa", "Varna", "Delge", "Meddela", "Notifiera"],
+    "test_high_traceability": ["Notify", "Alert", "Broadcast"],
+    "test_low_traceability": ["Upplysa", "Delge", "Meddela"],
+    "test_code_high_traceability": "page.on('dialog', dialog => dialog.accept());",
+    "test_code_low_traceability": "await expect(page.locator('.toast-notification')).toBeVisible();"
+  },
+  {
+    "ord": "Neka",
+    "ordklass": "Verb",
+    "synonymer": ["Bestrida", "Förvägra", "Hindra", "Vägra", "Avvisa"],
+    "test_high_traceability": ["Deny", "Reject", "Block"],
+    "test_low_traceability": ["Bestrida", "Vägra", "Avvisa"],
+    "test_code_high_traceability": "expect(response.status()).toBe(403);",
+    "test_code_low_traceability": "await expect(page.getByText('Åtkomst nekad')).toBeVisible();"
+  },
+  {
+    "ord": "Finnas kvar",
+    "ordklass": "Verb",
+    "synonymer": ["Fortleva", "Kvarstå", "Bestå", "Persistera", "Återstå"],
+    "test_high_traceability": ["Retain", "Persist", "Cache"],
+    "test_low_traceability": ["Fortleva", "Kvarstå", "Bestå"],
+    "test_code_high_traceability": "await page.reload(); await expect(page.getByRole('textbox')).toHaveValue('Säkerhet');",
+    "test_code_low_traceability": "// Verifierar enbart DOM utan att testa session/omladdning"
+  },
+  {
+    "ord": "Krascha",
+    "ordklass": "Verb",
+    "synonymer": ["Krocka", "Gå sönder", "Braka", "Skrälla", "Förstöras"],
+    "test_high_traceability": ["Crash", "FailUnrecoverably", "Panic"],
+    "test_low_traceability": ["Krocka", "Braka", "Skrälla"],
+    "test_code_high_traceability": "page.on('pageerror', err => expect(err.message).toContain('Fatal DB Error'));",
+    "test_code_low_traceability": "await expect(page.locator('.white-screen')).toBeVisible();"
+  },
+  {
+    "ord": "Avlyssning",
+    "ordklass": "Verb",
+    "synonymer": ["Övervakning", "Buggning", "Att lyssna på"],
+    "test_high_traceability": ["Intercept", "Spy", "Listen"],
+    "test_low_traceability": ["Buggning", "Övervakning"],
+    "test_code_high_traceability": "const requestPromise = page.waitForRequest('**/api/search'); await this.searchButton.click(); await requestPromise;",
+    "test_code_low_traceability": "await this.searchButton.click(); await page.waitForTimeout(2000);"
+  },
+{
+    "ord": "Onödig",
+    "ordklass": "Adjektiv",
+    "synonymer": ["Meningslös", "Omotiverad", "Obefogad", "Opåkallad", "Oviktig"],
+    "test_high_traceability": ["Redundant", "Obsolete", "Deprecated"],
+    "test_low_traceability": ["Meningslös", "Omotiverad", "Oviktig"],
+    "test_code_high_traceability": "const obsoleteElement = page.getByTestId('old-feature'); await expect(obsoleteElement).toHaveCount(0);",
+    "test_code_low_traceability": "await expect(page.locator('text=Gammal sök')).toBeHidden();"
+  },
+  {
+    "ord": "Värdefull (degradering)",
+    "ordklass": "Adjektiv",
+    "synonymer": ["Dyrbar", "Kostbar", "Viktig", "Ovärderlig", "Sänkning", "Reducering"],
+    "test_high_traceability": ["GracefulDegradation", "FaultTolerant", "Resilient"],
+    "test_low_traceability": ["Dyrbar", "Kostbar", "Viktig"],
+    "test_code_high_traceability": "await page.route('**/api/gemini', r => r.abort()); await expect(page.getByRole('alert')).toHaveText('Begränsad funktionalitet');",
+    "test_code_low_traceability": "await expect(page.locator('.offline-ui')).toBeVisible();"
+  },
+  {
+    "ord": "Reproducerbarhet",
+    "ordklass": "Adjektiv",
+    "synonymer": ["Mångfaldiga", "Återskapa", "Kopiera", "Fortplanta", "Återge"],
+    "test_high_traceability": ["Reproducible", "Deterministic", "Consistent"],
+    "test_low_traceability": ["Mångfaldiga", "Fortplanta", "Kopiera"],
+    "test_code_high_traceability": "test.use({ locale: 'sv-SE', timezoneId: 'Europe/Stockholm' }); // Deterministisk testmiljö",
+    "test_code_low_traceability": "// Litar på systemets nuvarande tid och lokala inställningar"
+  },
+  {
+    "ord": "Fullständig (cykel)",
+    "ordklass": "Adjektiv",
+    "synonymer": ["Total", "Hel", "Absolut", "Fullkomlig", "Genomgripande"],
+    "test_high_traceability": ["EndToEnd", "Complete", "Exhaustive"],
+    "test_low_traceability": ["Total", "Hel", "Absolut"],
+    "test_code_high_traceability": "test('E2E: Full translation lifecycle validation', async ({ page }) => { ... });",
+    "test_code_low_traceability": "test('Check translation button', async ({ page }) => { ... });"
+  },
+  {
+    "ord": "Otillgänglig",
+    "ordklass": "Adjektiv",
+    "synonymer": ["Avlägsen", "Sluten", "Svår att nå", "Oåtkomlig", "Reserverad"],
+    "test_high_traceability": ["Unavailable", "Disabled", "Hidden"],
+    "test_low_traceability": ["Avlägsen", "Sluten", "Reserverad"],
+    "test_code_high_traceability": "await expect(page.getByRole('button', { name: 'Sök' })).toBeDisabled();",
+    "test_code_low_traceability": "await expect(page.locator('#btn-search')).toHaveCSS('pointer-events', 'none');"
+  },
+  {
+    "ord": "Ofullständig (data)",
+    "ordklass": "Adjektiv",
+    "synonymer": ["Bristfällig", "Defekt", "Fragmentarig", "Otillräcklig", "Bristande"],
+    "test_high_traceability": ["Incomplete", "Partial", "Invalid"],
+    "test_low_traceability": ["Bristfällig", "Fragmentarig", "Bristande"],
+    "test_code_high_traceability": "await page.getByRole('textbox').fill(''); await expect(page.getByRole('alert')).toContainText('Ofullständig data');",
+    "test_code_low_traceability": "await expect(page.locator('.error-banner')).toBeVisible();"
+  }
+]

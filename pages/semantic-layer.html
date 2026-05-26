@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Tina Translator App - Sökhistorik</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: lavenderblush; }
+        .search-container { margin-bottom: 20px; }
+        #error-banner { color: red; font-weight: bold; margin-bottom: 15px; display: none; }
+        .search-result-item { padding: 10px; border-bottom: 1px solid #ccc; }
+        .metadata { font-size: 0.85em; color: #555; }
+        .history-section { margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        /* Grunddesign för en tagg */
+        .tag { 
+        display: inline-block;
+        padding: 4px 8px; 
+        border-radius: 12px; 
+        font-size: 0.8em; 
+        font-weight: bold; 
+        text-transform: uppercase;
+        }
+        .tag-substantiv { background-color: #e0f7fa; color: #006064; border: 1px solid #b2ebf2; }
+        .tag-verb { background-color: #fce4ec; color: #880e4f; border: 1px solid #f8bbd0; }
+        .tag-adjektiv { background-color: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; }
+        th:nth-child(2), td:nth-child(2),
+        th:nth-child(3), td:nth-child(3),
+        th:nth-child(4), td:nth-child(4) {
+            max-width: 210px;       /* Minskar bredden ytterligare */
+            padding-left: 30px;
+            padding-right: 10px;    /* Ökar avståndet till kolumnen till höger */
+            word-wrap: break-word;  /* Tvingar radbrytning i stället för krock */
+        }
+        th:nth-child(5), td:nth-child(5),
+        th:nth-child(6), td:nth-child(6) {
+            max-width: 420px;       /* Ökar bredden, minskar inte.. */
+            padding-left: 30px;
+            padding-right: 10px;    /* Ökar avståndet till kolumnen till höger */
+            word-wrap: break-word;
+        }
+        th:nth-child(1), td:nth-child(1) {
+            max-width: 190px;       /* Minskar bredden ytterligare */
+            padding-right: 10px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sök i översättningshistorik</h1>
+
+    <div id="error-banner" role="alert"></div>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Sök på ord, språk eller datum...">
+        
+        <button id="btn-search">Sök</button>
+    </div>
+
+    <div id="results-container">
+        </div>
+
+    <div class="history-section">
+        <h3>De 5 senaste sökningarna</h3>
+        <ul id="history-list">
+            </ul>
+    </div>
+
+    <script>
+        // Initiera och hämta data från din externa JSON-ordlista
+        let wordlist = [];
+        fetch('wordlist.json')
+            .then(response => response.json())
+            .then(data => {
+                wordlist = data;
+            })
+            .catch(error => console.error('Fel vid hämtning av wordlist.json:', error));
+
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('btn-search');
+        const errorBanner = document.getElementById('error-banner');
+        const resultsContainer = document.getElementById('results-container');
+        const historyList = document.getElementById('history-list');
+        
+        let searchHistory = [];
+
+        // Hantera/Initiera sökning vid klick
+        searchButton.addEventListener('click', () => {
+            const query = searchInput.value.trim().toLowerCase();
+            
+            // Återställ tillstånd (Clean state)
+            errorBanner.style.display = 'none';
+            errorBanner.textContent = '';
+            resultsContainer.innerHTML = '';
+
+            // Semantisk regel: Hantera "Ofullständig data" (Negativt testfall / Validering)
+            if (query === '') {
+                errorBanner.textContent = 'Fel: Sökfältet får inte vara tomt (Ofullständig data).';
+                errorBanner.style.display = 'block';
+                return;
+            }
+
+        searchHistory.unshift(searchInput.value.trim()); // Lägg till i historiken (för att visa de senaste sökningarna)
+        if (searchHistory.length > 5) { 
+            searchHistory.pop(); // Behåll endast de 5 senaste sökningarna
+        }
+
+        historyList.innerHTML = ''; // Rensa tidigare historikvisning
+
+        searchHistory.forEach(word => {
+            const li = document.createElement('li');
+            //Skapa nytt tomt dokument <li> i datorns minne
+            //Placera texten inuti "li" elementet till sökordet
+            li.textContent = word;
+            //lägg till det nya <li> i <ul>-listan
+            historyList.appendChild(li);
+        });
+
+            // Simulera sökning (Filtrera i vår "databas")
+            const filteredResults = wordlist.filter(item => 
+            item.ord.toLowerCase().includes(query)
+            // || item.synonymer.some(synonym => synonym.toLowerCase().includes(query))
+        );
+        
+        // Semantisk regel: Hantera "Otillgänglig" / Saknad data
+        if (filteredResults.length === 0) {
+            errorBanner.textContent = 'Inga matchande händelser funna i loggen.';
+            errorBanner.style.display = 'block';
+            return;
+        }
+        
+        const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Ursprungligt ord</th>
+                        <th>Ordklass</th> <th>Synonymer</th>
+                        <th>Komponent (High Traceability)</th>
+                        <th>Testkod (High Traceability)</th>
+                        <th>Testkod (Low Traceability)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            `;
+            
+        const tbody = table.querySelector('tbody');
+        
+        //Fyll tabellen med resultat
+        filteredResults.forEach(item => {
+            const tr = document.createElement('tr');
+            
+            tr.innerHTML = `
+            <td>${item.ord}</td>
+            <td><span class="tag tag-${item.ordklass.toLowerCase()}">${item.ordklass}</span></td>
+            <td>${item.synonymer.join(', ')}</td>
+            <td><code>${item.test_high_traceability.join(', ')}</code></td>
+            <td><code style="color: green;">${item.test_code_high_traceability}</code></td>
+            <td><code style="color: red;">${item.test_code_low_traceability}</code></td>
+            `;
+            tbody.appendChild(tr);
+        });
+        
+        resultsContainer.appendChild(table);
+
+    });
+    </script>
+</body>
+</html>

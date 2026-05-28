@@ -1,6 +1,6 @@
 class PageObjects {
     constructor(page) {
-        // ─── Locators ───────────────────────────────────────────
+        //Locators
         this.searchInput        = page.locator('#search-input');
         this.searchButton       = page.locator('#btn-search');
         this.errorMessage       = page.locator('#error-banner');
@@ -13,7 +13,7 @@ class PageObjects {
         this.wordClassTags      = page.locator('.tag');
         this.codeHighTrace      = page.locator('td code');
 
-        // ─── Methods ────────────────────────────────────────────
+        //Methods
         page.goto(url);
         page.locator(selector).fill(value);
         page.locator(selector).click();
@@ -22,7 +22,7 @@ class PageObjects {
         page.locator(selector).count();
         page.locator(selector).textContent();
 
-        // ─── Assertions ─────────────────────────────────────────
+        //Assertions
         expect(page).toHaveTitle(title);
         expect(page.locator(selector)).toHaveText(text);
         expect(page.locator(selector)).toBeVisible();
@@ -30,5 +30,4 @@ class PageObjects {
         expect(page.locator(selector)).toBeHidden();
     }
 
-    
 }

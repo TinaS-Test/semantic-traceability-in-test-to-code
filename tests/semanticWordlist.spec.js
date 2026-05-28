@@ -1,4 +1,18 @@
 import { test, expect } from '@playwright/test';
+import { PageObjects } from '../pageObjects/page-objects.js';
+
+test.beforeEach(async ({ page }) => {
+    const wordlist = JSON.parse(fs.readFileSync('./wordlist.json', 'utf-8'));
+
+    await page.route('**/wordlist.json', route => {
+        route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify(wordlist)
+        });
+    });
+    await page.goto('http://127.0.0.1:8000/semantic-wordlist.html');
+});
 
 test('Verify the page title to be Semantisk ordlista', async ({ page}) => {
     const searchPage = new SearchPage(page);
@@ -40,21 +54,3 @@ test('Assert history-list store the first and last search words', async ({ page 
     await expect(page.historyItems('#history-list li').first()).toHaveText('Fullständig');
     await expect(page.historyItems('#history-list li').last()).toHaveText('Hantera');
 });
-
-/*
-Säkerhet
-Validering -
-Hantera
-Omdirigera
-Generera
-Returnera -
-Initiera
-Lagra -
-Rapport
-Logg
-Förhindra -
-Åtkomst -
-Otillgänglig
-Ofullständig
-Fullständig
-*/
